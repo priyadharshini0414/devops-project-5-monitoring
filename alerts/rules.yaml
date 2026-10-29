@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: demo-app-alerts
+  namespace: monitoring
+  labels:
+    app: demo-app
+spec:
+  groups:
+    - name: demo-app.rules
+      rules:
+        - alert: PodCrashLooping
+          expr: increase(kube_pod_container_status_restarts_total{namespace="default"}[5m]) > 2
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash looping"
+            description: "Container restarted more than 2 times in 5 minutes."
+
+        - alert: HighErrorRate
+          expr: 100 * sum(rate(http_requests_total{status=~"5.."}[2m])) / sum(rate(http_requests_total[2m])) > 5
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Error rate is above 5%"
+            description: "Current error rate is {{ $value | printf \"%.1f\" }}%."
+
+        - alert: NodeMemoryHigh
+          expr: 100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 85
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Node memory above 85%"
+            description: "Node {{ $labels.instance }} memory used is {{ $value | printf \"%.1f\" }}%."
