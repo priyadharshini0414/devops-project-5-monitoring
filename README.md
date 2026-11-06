@@ -46,23 +46,23 @@ flowchart LR
 
 Golden signals dashboard with live metrics and logs:
 
-![Dashboard](screenshots/03-grafana-golden-signals.png)
+![Dashboard](screenshots/grafana-golden-signals.png)
 
 Prometheus targets (demo-app up):
 
-![Targets](screenshots/04-prometheus-targets.png)
+![Targets](screenshots/prometheus-targets.png)
 
 Alert firing in Prometheus:
 
-![Alert firing](screenshots/05-alert-firing-prometheus.png)
+![Alert firing](screenshots/alert-firing-prometheus.png)
 
 Alert received in Slack (FIRING and RESOLVED):
 
-![Slack](screenshots/06-slack-firing-resolved.png)
+![Slack](screenshots/slack-firing-resolved.png)
 
 Error logs in Loki:
 
-![Loki](screenshots/07-loki-logs-explore.png)
+![Loki](screenshots/loki-logs-explore.png)
 
 ## How to run
 
@@ -145,3 +145,4 @@ Generate traffic (PowerShell):
 - The Grafana password is a demo value for a local cluster only.
 - The `for:` duration on each alert avoids alerts for short spikes, which helps against alert fatigue.
 - Clean up with `kind delete cluster --name monitoring`.
+
